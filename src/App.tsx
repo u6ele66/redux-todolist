@@ -1,24 +1,39 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
+import { addTodo, deleteTodo } from './actions';
+import { NewTodoInput } from './NewTodoInput';
+import { TodosState } from './todoReducer';
+import "./App.css"
 
 function App() {
+  const todos = useSelector<TodosState, TodosState["todos"]>((state) => state.todos)
+
+  const dispatch = useDispatch();
+
+  const onAddTodo = (todo: string) => {
+    dispatch(addTodo(todo));
+  }
+
+  const onDeleteTodo = () => {
+    dispatch(deleteTodo());
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <NewTodoInput addTodo={onAddTodo} />
+      <hr></hr>
+      <ul>
+        {todos.map((todo) => {
+          return (
+            <div className='todo'>
+              <input type="checkbox" />
+              <li key={0} className='todo-item'>{todo}</li>
+              <button onClick={onDeleteTodo}>Удалить</button>
+            </div>
+          )
+        })}
+      </ul>
     </div>
   );
 }
