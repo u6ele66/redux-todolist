@@ -1,11 +1,12 @@
 import React, {useState, ChangeEvent} from "react";
+import { Todo } from "./todoReducer";
 
 interface NewTodoInputProps {
   addTodo(todo: string): void;
 }
 
 export const NewTodoInput: React.FC<NewTodoInputProps> = ({addTodo}) => {
-  const [todo, setTodo] = useState("");
+  const [todo, setTodo] = useState<Todo["text"]>("");
 
   const updateTodo = (event:ChangeEvent<HTMLInputElement>) => {
     setTodo(event.target.value);

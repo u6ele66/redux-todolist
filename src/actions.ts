@@ -3,15 +3,23 @@ type addAction = {
 }
 
 type deleteAction = {
-  type: "DELETE_TODO"
+  type: "DELETE_TODO", payload: string
+}
+
+type toggleAction = {
+  type: "TOGGLE_TODO", payload: string
 }
 
 export const addTodo = (todo:string): addAction => ({
   type: "ADD_TODO", payload: todo 
 })
 
-export const deleteTodo = (): deleteAction => ({
-  type: "DELETE_TODO"
+export const deleteTodo = (id: string): deleteAction => ({
+  type: "DELETE_TODO", payload: id
 })
 
-export type Action = addAction | deleteAction;
+export const toggleTodo = (id: string): toggleAction => ({
+  type: "TOGGLE_TODO", payload: id
+})
+
+export type Action = addAction | deleteAction | toggleAction;

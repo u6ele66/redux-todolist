@@ -9,3 +9,8 @@
   background-color: wheat;
   width: 100%;
 }
+
+.labelTodo {
+  display: flex;
+  justify-content: space-between;
+}

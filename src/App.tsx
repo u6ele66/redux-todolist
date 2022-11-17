@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
-import { addTodo, deleteTodo } from './actions';
+import { addTodo, deleteTodo, toggleTodo } from './actions';
 import { NewTodoInput } from './NewTodoInput';
 import { TodosState } from './todoReducer';
 import "./App.css"
@@ -15,8 +15,12 @@ function App() {
     dispatch(addTodo(todo));
   }
 
-  const onDeleteTodo = () => {
-    dispatch(deleteTodo());
+  const onDeleteTodo = (id: string) => {
+    dispatch(deleteTodo(id));
+  }
+
+  const onToggleTodo = (id: string) => {
+    dispatch(toggleTodo(id));
   }
 
   return (
@@ -27,9 +31,12 @@ function App() {
         {todos.map((todo) => {
           return (
             <div className='todo'>
-              <input type="checkbox" />
-              <li key={0} className='todo-item'>{todo}</li>
-              <button onClick={onDeleteTodo}>Удалить</button>
+              <li key={0} className='todo-item' >
+                <label style={{ textDecoration: todo.complete ? 'line-through' : undefined }}>
+                  <input type="checkbox" checked={todo.complete} onClick={() => onToggleTodo(todo.id)} /> {todo.text}
+                </label>
+              </li>
+              <button onClick={() => onDeleteTodo(todo.id)}>Удалить</button>
             </div>
           )
         })}
